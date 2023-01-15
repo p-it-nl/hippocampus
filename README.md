@@ -4,8 +4,8 @@ Hippocampus helps you store information you tend to forget.
 For example: the birthday of your mother, that thee your wife likes, the address of that amazing restaurant.... etc...
 Hippocampus can store anything that you want to remember.
 
-Storing things to remember can assigned tags, allowing to search for it easily when you need it.
-The better the tags assigned matched the content, the better the search results.
+Storing things to remember can be assigned tags, allowing to search for it easily when you need it.
+The better the tags assigned match the content, the better the search results.
 
 ## Platform agnostic
 Hippocampus is available for a wide variety of platforms:
