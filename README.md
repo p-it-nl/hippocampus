@@ -9,11 +9,11 @@ The better the tags assigned match the content, the better the search results.
 
 ## Platform agnostic
 Hippocampus is available for a wide variety of platforms:
-	- Windows
-	- Linux
-	- MacOS
-	- Android
-	- FUTURE_WORK: iOS
+- Windows
+- Linux
+- MacOS
+- Android
+- FUTURE_WORK: iOS
 
 ## Synchronization
 Hippocampus can synchronize with other Hippocampus installations.
