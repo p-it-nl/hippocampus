@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hippocampus</string>
+    <string name="title_activity_hippo_view">Hippo\'s</string>
+    <string name="title_activity_hippo_add">Add a Hippo</string>
+</resources>

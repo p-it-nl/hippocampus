@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.Region?>
+<?import io.hippocampus.agent.fxml.button.SaveButton?>
+<?import io.hippocampus.agent.fxml.button.HeaderButton?>
+
+<VBox fx:id="hippoAdd" fillWidth="true" xmlns:fx="http://javafx.com/fxml" fx:controller="io.hippocampus.agent.fxml.HippoAddController">
+    <children>
+        <HBox fx:id="header" maxWidth="999999D">
+            <Label text="Add a Hippo" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HeaderButton />
+        </HBox>
+        <VBox fx:id="viewWrapper">
+            <Label text="New Hippo" />
+            <TextField fx:id="hippo" />
+            <Label fx:id="hippoTagsLabel" text="Hippo tags" />
+            <TextField fx:id="tags" />
+        </VBox>
+        <ButtonBar>
+            <buttons>
+                <SaveButton onAction="#saveHippo" />
+            </buttons>
+        </ButtonBar>
+    </children>
+</VBox>
+        
