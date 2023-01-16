@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.hippocampus.hippodata.dao.HippoTagDao;
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.HippoTag;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.entity.HippoTag;
+import io.hippocampus.hippodata.entity.Tag;
 
 /**
  * Service for hippo - tag coupling
@@ -64,6 +64,25 @@ public class HippoTagService {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * Delete hippo entries
+     *
+     * @param hippo the hippo to delete entries for
+     */
+    public void delete(final Hippo hippo) {
+        hippoTagDao.delete(hippoTagDao.getByHippoId(hippo.id));
+    }
+
+    /**
+     * Get tags for hippo
+     *
+     * @param id the hippo id to find tags for
+     * @return the tags
+     */
+    public List<Tag> getTagsForHippo(final long id) {
+        return hippoTagDao.getTagsForHippo(id);
     }
 
     private HippoTag[] prepareHippoTags(final long hippoId, final List<Long> tagIds) {

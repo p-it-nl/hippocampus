@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
+    <color name="tint">#F1F1F1</color>
 
     <color name="hippo">#37D9F9</color>
     <color name="hippoDark">#2CADC7</color>
     <color name="hippoAccent">#218295</color>
+
 </resources>

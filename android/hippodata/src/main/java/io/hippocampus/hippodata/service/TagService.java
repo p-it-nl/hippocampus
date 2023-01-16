@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.hippocampus.hippodata.dao.TagDao;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Tag;
 import io.hippocampus.hippodata.util.DataUtil;
 
 /**

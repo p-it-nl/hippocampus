@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import io.hippocampus.hippodata.HippoDatabase;
-import io.hippocampus.hippodata.database.AppDatabase;
 import io.hippocampus.hippodata.service.HippoService;
 
 /**

@@ -23,9 +23,9 @@ import io.hippocampus.hippodata.converter.DateConverter;
 import io.hippocampus.hippodata.dao.HippoDao;
 import io.hippocampus.hippodata.dao.HippoTagDao;
 import io.hippocampus.hippodata.dao.TagDao;
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.HippoTag;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.entity.HippoTag;
+import io.hippocampus.hippodata.entity.Tag;
 
 /**
  * Application database

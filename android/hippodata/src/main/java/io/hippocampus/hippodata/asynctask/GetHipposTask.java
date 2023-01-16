@@ -16,17 +16,17 @@
 package io.hippocampus.hippodata.asynctask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.hippocampus.hippodata.HippoDatabase;
 import io.hippocampus.hippodata.database.AppDatabase;
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.entity.Tag;
 import io.hippocampus.hippodata.service.HippoService;
 import io.hippocampus.hippodata.service.HippoTagService;
 import io.hippocampus.hippodata.service.TagService;
@@ -55,9 +55,11 @@ public class GetHipposTask extends AsyncTask<String, Void, List<Hippo>> {
 
     @Override
     protected List<Hippo> doInBackground(final String... tagsTexts) {
-        if (tagsTexts == null || tagsTexts[0].isEmpty()) {
+        if (tagsTexts == null || tagsTexts.length == 0) {
+            Log.i("getting all", "getting all");
             return hippoService.getAllHippos();
         } else {
+            Log.i("getting for tags", "getting for tags");
             return getHippos(tagsTexts);
         }
     }

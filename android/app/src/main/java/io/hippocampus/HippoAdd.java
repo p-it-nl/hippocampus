@@ -17,7 +17,6 @@ package io.hippocampus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,6 +35,7 @@ import io.hippocampus.hippodata.asynctask.SaveHippoTask;
  * Screen to add a Hippo
  *
  * @author Patrick-4488
+ * @see AppCompatActivity
  */
 public class HippoAdd extends AppCompatActivity implements OnTaskCompleted<Boolean> {
 

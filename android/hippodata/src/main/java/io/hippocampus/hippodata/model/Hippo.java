@@ -15,27 +15,100 @@
  */
 package io.hippocampus.hippodata.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Date;
+import io.hivemind.synchronizer.HiveResource;
 
 /**
- * Hippo entity
- * 1 - * -> relation with tags via HippoTag
+ * The Hippo model
  *
- * @see HippoTag
+ * @author Patrick-4488
  */
-@Entity
-public class Hippo {
+public class Hippo extends HiveResource {
 
-    @PrimaryKey(autoGenerate = true)
-    public long id;
+    private long id;
+    private long version;
+    private String hippo;
+    private List<String> tags;
+    private LocalDateTime creationDate;
 
-    @ColumnInfo(name = "hippo")
-    public String hippo;
+    public Hippo() {
+    }
 
-    @ColumnInfo(name = "creation_date")
-    public Date creationDate;
+    public Hippo(
+            final long id,
+            final String hippo,
+            final LocalDateTime creationDate,
+            final List<String> tags) {
+        this.id = id;
+        this.hippo = hippo;
+        this.creationDate = creationDate;
+        this.tags = tags;
+    }
+
+    @Override
+    public Object getId() {
+        return id;
+    }
+
+    public long getIdAsLong() {
+        return id;
+    }
+
+    public void setId(final long id) {
+        this.id = id;
+    }
+
+    public void setVersion(final long version) {
+        this.version = version;
+    }
+
+    public void upVersion() {
+        version += 1;
+    }
+
+    @Override
+    public Object getVersion() {
+        return version;
+    }
+
+    public long getVersionAsLong() {
+        return version;
+    }
+
+    public String getHippo() {
+        return hippo;
+    }
+
+    public void setHippo(final String hippo) {
+        this.hippo = hippo;
+    }
+
+    public List<String> getTags() {
+        return (tags != null ? tags : new ArrayList<>());
+    }
+
+    public void setTags(final List<String> tags) {
+        this.tags = tags;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(final LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id + "\n"
+                + "version: " + version + "\n"
+                + "hippo: " + hippo + "\n"
+                + "tags: " + (tags != null ? tags.toString() : "") + "\n"
+                + "creationDate: "
+                + (creationDate != null ? creationDate.toString() : "");
+    }
 }

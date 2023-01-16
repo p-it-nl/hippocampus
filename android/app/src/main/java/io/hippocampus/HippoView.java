@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -34,7 +33,7 @@ import java.util.List;
 import io.hippocampus.adapter.HippoDapter;
 import io.hippocampus.hippodata.asynctask.GetHipposTask;
 import io.hippocampus.hippodata.asynctask.OnTaskCompleted;
-import io.hippocampus.hippodata.model.Hippo;
+import io.hippocampus.hippodata.entity.Hippo;
 
 /**
  * Shows the list of hippos and allows interaction

@@ -22,9 +22,9 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.HippoTag;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.entity.HippoTag;
+import io.hippocampus.hippodata.entity.Tag;
 
 /**
  * Hippo tag coupling table dao
@@ -35,10 +35,10 @@ import io.hippocampus.hippodata.model.Tag;
 public interface HippoTagDao {
 
     @Query("SELECT * FROM hippotag WHERE hippoId =:hippoId")
-    HippoTag getByHippoId(long hippoId);
+    HippoTag[] getByHippoId(final long hippoId);
 
     @Insert
-    void insert(HippoTag... hippoTags);
+    void insert(final HippoTag... hippoTags);
 
     @Query("SELECT hippo.id, hippo.hippo, hippo.creation_date FROM hippo INNER JOIN hippotag ON hippo.id = hippotag.hippoId WHERE hippotag.tagId =:tagId ORDER BY hippo.creation_date DESC")
     List<Hippo> getHipposForTag(final long tagId);
@@ -47,5 +47,5 @@ public interface HippoTagDao {
     List<Tag> getTagsForHippo(final long hippoId);
 
     @Delete
-    void delete(HippoTag... hippoTags);
+    void delete(final HippoTag... hippoTags);
 }

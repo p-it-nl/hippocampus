@@ -23,7 +23,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import io.hippocampus.hippodata.model.Hippo;
+import io.hippocampus.hippodata.entity.Hippo;
 
 /**
  * Hippo dao
@@ -32,17 +32,18 @@ import io.hippocampus.hippodata.model.Hippo;
  */
 @Dao
 public interface HippoDao {
+
     @Query("SELECT * FROM hippo ORDER BY creation_date DESC")
     List<Hippo> getAll();
 
     @Query("SELECT * FROM hippo WHERE id =:hippoId")
-    Hippo getById(long hippoId);
+    Hippo getById(final long hippoId);
 
     @Query("SELECT * FROM hippo WHERE id IN (:hippoIds)")
-    List<Hippo> getAllByIds(long[] hippoIds);
+    List<Hippo> getAllByIds(final long[] hippoIds);
 
     @Query("SELECT * FROM hippo WHERE hippo LIKE :hippoNeedle")
-    List<Hippo> findByHippo(String hippoNeedle);
+    List<Hippo> findByHippo(final String hippoNeedle);
 
     @Insert
     long insert(Hippo hippo);

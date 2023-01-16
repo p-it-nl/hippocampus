@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,8 +20,7 @@ import java.util.List;
 
 import io.hippocampus.hippodata.dao.HippoDao;
 import io.hippocampus.hippodata.database.AppDatabase;
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
 
 /**
  * Service for Hippos
@@ -65,7 +64,24 @@ public class HippoService {
      * @return hippos
      */
     public List<Hippo> getAllHippos() {
-        return hippoDao.getAll();
+        List<Hippo> hippos = hippoDao.getAll();
+        for (Hippo hippo : hippos) {
+            hippo.tags = hippoTagService.getTagsForHippo(hippo.id);
+        }
+
+        return hippos;
+    }
+
+    /**
+     * Deletes an hippo
+     *
+     * @param hippo hippo to delete
+     */
+    public void deleteHippo(final Hippo hippo) {
+        if (hippo != null) {
+            hippoTagService.delete(hippo);
+            hippoDao.delete(hippo);
+        }
     }
 
     private Hippo prepareHippo(final String hippoText) {

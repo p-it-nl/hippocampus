@@ -29,9 +29,9 @@ import io.hippocampus.hippodata.dao.HippoDao;
 import io.hippocampus.hippodata.dao.HippoTagDao;
 import io.hippocampus.hippodata.dao.TagDao;
 import io.hippocampus.hippodata.database.AppDatabase;
-import io.hippocampus.hippodata.model.Hippo;
-import io.hippocampus.hippodata.model.HippoTag;
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.entity.HippoTag;
+import io.hippocampus.hippodata.entity.Tag;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -190,5 +190,19 @@ public class HippoServiceTest {
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(amountExpected, result.size());
+    }
+
+    @Test
+    public void deleteHippoWithoutHippo() {
+        Hippo hippo = null;
+
+        classUnderTest.deleteHippo(hippo);
+    }
+
+    @Test
+    public void deleteHippoWithHippo() {
+        Hippo hippo = new Hippo();
+
+        classUnderTest.deleteHippo(hippo);
     }
 }

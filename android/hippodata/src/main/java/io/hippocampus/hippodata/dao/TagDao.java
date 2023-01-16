@@ -23,7 +23,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import io.hippocampus.hippodata.model.Tag;
+import io.hippocampus.hippodata.entity.Tag;
 
 /**
  * Tag dao
@@ -32,28 +32,28 @@ import io.hippocampus.hippodata.model.Tag;
  */
 @Dao
 public interface TagDao {
-    
+
     @Query("SELECT * FROM tag ORDER BY creation_date DESC")
     List<Tag> getAll();
 
     @Query("SELECT * FROM tag WHERE id =:tagId")
-    Tag getById(long tagId);
+    Tag getById(final long tagId);
 
     @Query("SELECT * FROM tag WHERE id IN (:tagIds)")
-    List<Tag> getAllByIds(long[] tagIds);
+    List<Tag> getAllByIds(final long[] tagIds);
 
     @Query("SELECT * FROM tag WHERE tag.tag LIKE :tagNeedle")
-    Tag findByTag(String tagNeedle);
+    Tag findByTag(final String tagNeedle);
 
     @Query("SELECT * FROM tag WHERE tag.tag LIKE :tagNeedle")
-    List<Tag> findByTags(String tagNeedle);
+    List<Tag> findByTags(final String tagNeedle);
 
     @Insert
-    long insert(Tag tag);
+    long insert(final Tag tag);
 
     @Update
-    void update(Tag... tags);
+    void update(final Tag... tags);
 
     @Delete
-    void delete(Tag... tags);
+    void delete(final Tag... tags);
 }
