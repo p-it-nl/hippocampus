@@ -21,11 +21,11 @@ import io.hippocampus.agent.hive.HippoResourceProvider;
 import io.hippocampus.agent.service.HippoService;
 import io.hippocampus.agent.stage.StageHelper;
 import io.hippocampus.agent.util.LogConfig;
-import io.hivemind.configuration.SynchronizerConfiguration;
-import io.hivemind.constant.ConsistencyModel;
-import io.hivemind.exception.HiveSynchronizationException;
-import io.hivemind.exception.NotSupportedException;
 import io.hivemind.synchronizer.HiveSynchronizer;
+import io.hivemind.synchronizer.configuration.SynchronizerConfiguration;
+import io.hivemind.synchronizer.constant.ConsistencyModel;
+import io.hivemind.synchronizer.exception.HiveSynchronizationException;
+import io.hivemind.synchronizer.exception.NotSupportedException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -55,7 +55,7 @@ public class App extends Application {
         hippoAppState = HippoAppState.getInstance();
 
         try {
-            SynchronizerConfiguration config = new SynchronizerConfiguration("http://192.168.178.108:8000", ConsistencyModel.EVENTUAL_CONSISTENCY);
+            SynchronizerConfiguration config = new SynchronizerConfiguration("http://localhost:8000", ConsistencyModel.EVENTUAL_CONSISTENCY);
             synchronizer = new HiveSynchronizer(
                     new HippoResourceProvider(hippoService), config);
         } catch (NotSupportedException ex) {

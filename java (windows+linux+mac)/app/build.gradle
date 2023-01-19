@@ -11,11 +11,13 @@ plugins {
 }
 
 repositories {
+    // TODO: Remove local when artifacts are available in central
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    implementation files('C://Users//Patrick//Desktop//werk_en_hobby//projects//hivemind//synchronizer//target//hivemind-synchronizer-0.1.jar')
+    implementation 'io.hivemind:hivemind-synchronizer:0.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.11.0'
     testImplementation 'org.mockito:mockito-core:4.5.1'
