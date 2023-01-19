@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +15,9 @@
  */
 package io.hippocampus.hippodata.hive;
 
+import android.util.Log;
+
+import io.hippocampus.hippodata.asynctask.SynchronizeWithUITask;
 import io.hivemind.configuration.SynchronizerConfiguration;
 import io.hivemind.constant.ConsistencyModel;
 import io.hivemind.exception.HiveSynchronizationException;
@@ -29,6 +32,7 @@ import io.hivemind.synchronizer.HiveSynchronizer;
 public class Hivemind {
 
     private HiveSynchronizer synchronizer;
+    private SynchronizeWithUITask uiTask;
 
     private static Hivemind instance;
 
@@ -42,20 +46,49 @@ public class Hivemind {
         if (instance == null) {
             instance = new Hivemind();
         }
+
         return instance;
+    }
+
+    /**
+     * Update the UI with changes
+     */
+    public void propagateUIUpdate() {
+        if (uiTask != null) {
+            uiTask.run();
+        } else {
+            // need to know what to update
+        }
+    }
+
+    /**
+     * Set the UI task to propagate updates to
+     *
+     * @param task
+     */
+    public void setUiTask(final SynchronizeWithUITask task) {
+        uiTask = task;
     }
 
     /**
      * Start Hivemind synchronization
      */
     public void start() {
-        try {
-            SynchronizerConfiguration config = new SynchronizerConfiguration("http://192.168.178.108:8000", ConsistencyModel.EVENTUAL_CONSISTENCY);
-            synchronizer = new HiveSynchronizer(
-                    new HippoResourceProvider(), config);
+        Log.i("Hivemind", "start");
 
+        if (synchronizer == null) {
+            try {
+                SynchronizerConfiguration config = new SynchronizerConfiguration("http://p-it.nl/hivemind", ConsistencyModel.EVENTUAL_CONSISTENCY);
+                synchronizer = new HiveSynchronizer(
+                        new HippoResourceProvider(this), config);
+            } catch (NotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
             synchronizer.startSynchronization();
-        } catch (NotSupportedException | HiveSynchronizationException e) {
+        } catch (HiveSynchronizationException e) {
             e.printStackTrace();
         }
     }
@@ -64,6 +97,8 @@ public class Hivemind {
      * Stop Hivemind synchronization
      */
     public void stop() {
+        Log.i("Hivemind", "stop");
+
         synchronizer.stopSynchronization();
     }
 }

@@ -5,7 +5,7 @@ android {
     buildToolsVersion '33.0.1'
     defaultConfig {
         applicationId "io.hippocampus"
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+    implementation files('C://Users//Patrick//Desktop//werk_en_hobby//projects//hivemind//synchronizer//target//hivemind-synchronizer-0.1-jar-with-dependencies.jar')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

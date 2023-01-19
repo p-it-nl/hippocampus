@@ -17,6 +17,8 @@ package io.hippocampus.hippodata.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import io.hippocampus.hippodata.dao.HippoDao;
 import io.hippocampus.hippodata.database.AppDatabase;
@@ -30,46 +32,91 @@ import io.hippocampus.hippodata.entity.Hippo;
 public class HippoService {
 
     private final HippoDao hippoDao;
-    private final TagService tagService;
-    private final HippoTagService hippoTagService;
 
     public HippoService(final AppDatabase db) {
         hippoDao = db.getHippoDao();
-        hippoTagService = new HippoTagService(db.getHippoTagDao());
-        tagService = new TagService(db.getTagDao());
     }
 
     /**
-     * Save hippo and implicitly tags
+     * Save hippo
      *
      * @param hippoText the hippo text
      * @param hippoTags the tags
      */
-    public void saveHippo(final String hippoText, final List<String> hippoTags) {
+    public void saveHippo(final String hippoText, final String hippoTags) {
         if (hippoText != null && !hippoText.isEmpty()) {
-            Hippo hippo = prepareHippo(hippoText);
+            Hippo hippo = new Hippo(hippoText, hippoTags);
             saveHippo(hippo);
-
-            List<Long> tagIds = tagService.saveTags(hippoTags);
-            hippoTagService.saveHippoTags(hippo.id, tagIds);
         } else {
             // A hippo is required, tags are optional
         }
     }
 
     /**
-     * Get all hippos
-     * FUTURE_WORK: add pagination
+     * Save multiple hippos
+     *
+     * @param hippos the hippos to save
+     */
+    public void saveHippos(final List<Hippo> hippos) {
+        if (hippos != null) {
+            for (Hippo hippo : hippos) {
+                saveHippo(hippo);
+            }
+        }
+    }
+
+    /**
+     * Update hippo
+     *
+     * @param hippo the hippo to update
+     */
+    public void saveHippo(final Hippo hippo) {
+        if (hippo != null && hippo.hippo != null && !hippo.hippo.isEmpty()) {
+            Hippo existing = hippoDao.getById(hippo.id);
+            boolean isNewer = (existing == null || (hippo.getVersionAsLong() > existing.getVersionAsLong()));
+            if (existing == null || isNewer) {
+                determineTheVersion(hippo);
+                determineTheCreationDate(hippo);
+
+                hippoDao.insert(hippo);
+            } else {
+                /**
+                 *  Received hippo but the existing one is newer, not saving. Synchronization will sort this out
+                 */
+            }
+        } else {
+            /**
+             * Request to save hippo was made, but no hippo was provided, this might indicate
+             * an issue in prerequisite steps
+             */
+        }
+    }
+
+    /**
+     * Get hippos
      *
      * @return hippos
      */
-    public List<Hippo> getAllHippos() {
-        List<Hippo> hippos = hippoDao.getAll();
-        for (Hippo hippo : hippos) {
-            hippo.tags = hippoTagService.getTagsForHippo(hippo.id);
+    public List<Hippo> getHippos(final Predicate<Hippo> predicate) {
+        List<Hippo> hippos = getAllHippos();
+        if (predicate != null) {
+            hippos = hippos.stream()
+                    .filter(predicate)
+                    .collect(Collectors.toList());
         }
 
         return hippos;
+    }
+
+    /**
+     * Deletes hippos
+     *
+     * @param hippo hippos to delete
+     */
+    public void deleteHippos(final Hippo[] hippo) {
+        if (hippo != null) {
+            hippoDao.delete(hippo);
+        }
     }
 
     /**
@@ -79,21 +126,29 @@ public class HippoService {
      */
     public void deleteHippo(final Hippo hippo) {
         if (hippo != null) {
-            hippoTagService.delete(hippo);
             hippoDao.delete(hippo);
         }
     }
 
-    private Hippo prepareHippo(final String hippoText) {
-        Hippo hippo = new Hippo();
-        hippo.hippo = hippoText;
-        hippo.creationDate = new Date();
-
-        return hippo;
+    private void determineTheCreationDate(final Hippo hippo) {
+        Date date = hippo.creationDate;
+        if (date == null) {
+            hippo.creationDate = new Date();
+        } else {
+            // Its alright, let it keep its date
+        }
     }
 
-    private void saveHippo(final Hippo hippo) {
-        long id = hippoDao.insert(hippo);
-        hippo.id = id;
+    private void determineTheVersion(final Hippo hippo) {
+        if (hippo.getVersion() == null || hippo.getVersionAsLong() == 0) {
+            hippo.version = 1L;
+        } else {
+            // Its alright, let it keep its version
+        }
     }
+
+    private List<Hippo> getAllHippos() {
+        return hippoDao.getAll();
+    }
+
 }

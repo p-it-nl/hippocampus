@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,8 @@
 package io.hippocampus.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.hippocampus.R;
 import io.hippocampus.hippodata.asynctask.DeleteHippoTask;
 import io.hippocampus.hippodata.entity.Hippo;
-import io.hippocampus.hippodata.entity.Tag;
 import io.hippocampus.listener.HippoDeleteListener;
 
 /**
@@ -44,6 +47,8 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
     private final Context context;
     public final List<Hippo> hippos;
 
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
     public HippoDapter(final Context context, final List<Hippo> hippos) {
         super(context, 0, hippos);
 
@@ -54,9 +59,9 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
     /**
      * Returns a view as list item for in the list containing the hippo data
      *
-     * @param position position of the item within the list
+     * @param position    position of the item within the list
      * @param convertView the list item view | null
-     * @param parent the view containing the list (ListView)
+     * @param parent      the view containing the list (ListView)
      * @return the view as list item with hippo data
      */
     @Override
@@ -72,7 +77,7 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
 
         prepareListItem(hippo, listItem);
         setText(hippo, listItem);
-        setTags(hippo.tags, listItem, parent);
+        setTags(hippo.getTags(), listItem, parent);
 
         return listItem;
     }
@@ -87,8 +92,8 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
 
         hippoListItemDelete.setOnClickListener(new HippoDeleteListener(context, this) {
             @Override
-            public void onClick(View view) {
-                new DeleteHippoTask(this).execute(hippo);
+            public void onClick(final View view) {
+                executor.execute(new DeleteHippoTask(new Handler(Looper.getMainLooper()), this, hippo));
             }
         });
     }
@@ -106,7 +111,7 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
         }
     }
 
-    private void setTags(final List<Tag> tags, final View listItem, final ViewGroup parent) {
+    private void setTags(final List<String> tags, final View listItem, final ViewGroup parent) {
         if (tags == null) {
             // Tags are not a must
             return;
@@ -118,8 +123,8 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
         addTags(tags, tagList, parent);
     }
 
-    private void addTags(final List<Tag> tags, final GridLayout tagList, final ViewGroup parent) {
-        for (Tag tag : tags) {
+    private void addTags(final List<String> tags, final GridLayout tagList, final ViewGroup parent) {
+        for (String tag : tags) {
             View tagView = getViewForTag(parent);
             setTextViewForTag(tag, tagView);
 
@@ -132,9 +137,9 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
         return vi.inflate(R.layout.list_item_tag, parent, false);
     }
 
-    private void setTextViewForTag(final Tag tag, final View tagView) {
+    private void setTextViewForTag(final String tag, final View tagView) {
         TextView tagTextView = tagView.findViewById(R.id.tag_text);
-        tagTextView.setText(tag.tag);
+        tagTextView.setText(tag);
     }
 }
 

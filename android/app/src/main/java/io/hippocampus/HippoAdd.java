@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,8 @@ package io.hippocampus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,8 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.hippocampus.hippodata.asynctask.OnTaskCompleted;
 import io.hippocampus.hippodata.asynctask.SaveHippoTask;
@@ -39,7 +41,7 @@ import io.hippocampus.hippodata.asynctask.SaveHippoTask;
  */
 public class HippoAdd extends AppCompatActivity implements OnTaskCompleted<Boolean> {
 
-    private static final String SPACE = " ";
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     public void onTaskCompleted(final Boolean saved) {
@@ -64,10 +66,9 @@ public class HippoAdd extends AppCompatActivity implements OnTaskCompleted<Boole
 
     private void saveHippo() {
         String hippoText = getHippoText();
-        List<String> hippoTags = getTags();
 
-        if (!hippoText.isEmpty() && !hippoTags.isEmpty()) {
-            new SaveHippoTask(this, hippoText, hippoTags).execute();
+        if (!hippoText.isEmpty()) {
+            executor.execute(new SaveHippoTask(new Handler(Looper.getMainLooper()), this, hippoText, getTags()));
         } else {
             // Nothing to save when either hippoText or tags is empty
         }
@@ -79,12 +80,9 @@ public class HippoAdd extends AppCompatActivity implements OnTaskCompleted<Boole
         return hippoEditText.getText().toString();
     }
 
-    private List<String> getTags() {
+    private String getTags() {
         EditText hippoEditText = findViewById(R.id.tags);
-        String tagText = hippoEditText.getText().toString();
-        String[] tags = tagText.split(SPACE);
-
-        return Arrays.asList(tags);
+        return hippoEditText.getText().toString();
     }
 
     private void goToHippoView() {

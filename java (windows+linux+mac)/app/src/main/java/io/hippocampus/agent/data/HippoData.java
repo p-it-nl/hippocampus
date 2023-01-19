@@ -88,7 +88,7 @@ public class HippoData {
         } else {
             LOGGER.log(WARNING, """
                     Request to save hippo was made, but no hippo was provided, 
-                    this might indicate to an issue in prerequisite steps""");
+                    this might indicate an issue in prerequisite steps""");
         }
 
         return data.hippos;

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +15,7 @@
  */
 package io.hippocampus.hippodata.asynctask;
 
-import android.os.AsyncTask;
-
-import java.util.List;
+import android.os.Handler;
 
 import io.hippocampus.hippodata.HippoDatabase;
 import io.hippocampus.hippodata.service.HippoService;
@@ -27,36 +25,29 @@ import io.hippocampus.hippodata.service.HippoService;
  *
  * @author Patrick-4488
  */
-public class SaveHippoTask extends AsyncTask<Void, Void, Boolean> {
+public class SaveHippoTask implements Runnable {
 
     private final OnTaskCompleted listener;
     private final String hippoText;
-    private final List<String> hippoTags;
+    private final String hippoTags;
     private final HippoService service;
+    private final Handler handler;
 
-    public SaveHippoTask(final OnTaskCompleted listener, final String hippoText, final List<String> hippoTags) {
+    public SaveHippoTask(final Handler handler, final OnTaskCompleted listener, final String hippoText, final String hippoTags) {
         this.listener = listener;
         this.hippoText = hippoText;
         this.hippoTags = hippoTags;
+        this.handler = handler;
 
         service = new HippoService(HippoDatabase.getInstance().getDatabase());
     }
 
     @Override
-    protected Boolean doInBackground(final Void... params) {
-        boolean saved = false;
-        try {
-            service.saveHippo(hippoText, hippoTags);
-            saved = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void run() {
+        service.saveHippo(hippoText, hippoTags);
 
-        return saved;
-    }
-
-    @Override
-    protected void onPostExecute(final Boolean saved) {
-        listener.onTaskCompleted(saved);
+        handler.post(() -> {
+            listener.onTaskCompleted(true);
+        });
     }
 }

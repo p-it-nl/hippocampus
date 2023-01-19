@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('C://Users//Patrick//Desktop//werk_en_hobby//projects//hivemind//target//hivemind-0.1.jar')
+    implementation files('C://Users//Patrick//Desktop//werk_en_hobby//projects//hivemind//synchronizer//target//hivemind-synchronizer-0.1.jar')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.11.0'
     testImplementation 'org.mockito:mockito-core:4.5.1'

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) p-it
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,8 @@ package io.hippocampus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -29,11 +31,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.hippocampus.adapter.HippoDapter;
 import io.hippocampus.hippodata.asynctask.GetHipposTask;
 import io.hippocampus.hippodata.asynctask.OnTaskCompleted;
 import io.hippocampus.hippodata.entity.Hippo;
+import io.hippocampus.hippodata.hive.Hivemind;
 
 /**
  * Shows the list of hippos and allows interaction
@@ -45,8 +50,9 @@ public class HippoView extends AppCompatActivity implements OnTaskCompleted<List
 
     private HippoDapter itemsAdapter;
     private List<Hippo> hippos;
+    private Hivemind hivemind;
 
-    private static final String SPACE = " ";
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     public void onTaskCompleted(final List<Hippo> hippos) {
@@ -61,6 +67,7 @@ public class HippoView extends AppCompatActivity implements OnTaskCompleted<List
         setContentView(R.layout.activity_hippo_view);
 
         hippos = new ArrayList<>();
+        hivemind = Hivemind.getInstance();
 
         prepareLayout();
         prepareSearch();
@@ -75,7 +82,33 @@ public class HippoView extends AppCompatActivity implements OnTaskCompleted<List
         ListView listView = findViewById(R.id.hippo_list);
         listView.setAdapter(itemsAdapter);
 
-        new GetHipposTask(this).execute();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(new GetHipposTask(handler, this, null));
+
+        hivemind.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        hivemind.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        hivemind.stop();
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        hivemind.stop();
     }
 
     private void prepareLayout() {
@@ -93,7 +126,7 @@ public class HippoView extends AppCompatActivity implements OnTaskCompleted<List
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(final Editable input) {
-                new GetHipposTask(listener).execute(input.toString().split(SPACE));
+                executor.execute(new GetHipposTask(new Handler(Looper.getMainLooper()), listener, input.toString()));
             }
 
             @Override
