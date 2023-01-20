@@ -74,11 +74,10 @@ public class Hivemind {
      * Start Hivemind synchronization
      */
     public void start() {
-        Log.i("Hivemind", "start");
-
         if (synchronizer == null) {
             try {
-                SynchronizerConfiguration config = new SynchronizerConfiguration("http://p-it.nl/hivemind", ConsistencyModel.EVENTUAL_CONSISTENCY);
+                SynchronizerConfiguration config = new SynchronizerConfiguration("https://p-it.nl/hivemind", ConsistencyModel.EVENTUAL_CONSISTENCY);
+                config.setPeriodBetweenRequests(10);
                 synchronizer = new HiveSynchronizer(
                         new HippoResourceProvider(this), config);
             } catch (NotSupportedException e) {
@@ -97,8 +96,6 @@ public class Hivemind {
      * Stop Hivemind synchronization
      */
     public void stop() {
-        Log.i("Hivemind", "stop");
-
         synchronizer.stopSynchronization();
     }
 }

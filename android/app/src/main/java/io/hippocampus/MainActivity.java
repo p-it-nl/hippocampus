@@ -36,11 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         prepareHippoDatabase();
-        startSynchronization();
         openHippoView();
-    }
-
-    private void startSynchronization() {
     }
 
     private void prepareHippoDatabase() {

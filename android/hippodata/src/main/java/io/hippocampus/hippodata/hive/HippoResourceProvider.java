@@ -15,6 +15,8 @@
  */
 package io.hippocampus.hippodata.hive;
 
+import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -80,6 +82,7 @@ public class HippoResourceProvider implements ResourceProvider {
 
     @Override
     public void saveData(final byte[] bytes) {
+        Log.i("Saving data", "having: " + bytes.length);
         List<Hippo> receivedHippos = null;
         try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes); ObjectInputStream ois = new ObjectInputStream(bais);) {
             receivedHippos = (List<Hippo>) ois.readObject();

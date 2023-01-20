@@ -38,6 +38,7 @@ dependencies {
 
     implementation 'io.hivemind:hivemind-synchronizer-android:0.1'
     implementation 'org.slf4j:slf4j-api:2.0.6'
+    implementation 'org.slf4j:slf4j-simple:2.0.6'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.room:room-runtime:2.0.0'
     testImplementation project(path: ':hippodata')
