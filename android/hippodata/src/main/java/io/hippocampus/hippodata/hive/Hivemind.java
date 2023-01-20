@@ -18,11 +18,11 @@ package io.hippocampus.hippodata.hive;
 import android.util.Log;
 
 import io.hippocampus.hippodata.asynctask.SynchronizeWithUITask;
-import io.hivemind.configuration.SynchronizerConfiguration;
-import io.hivemind.constant.ConsistencyModel;
-import io.hivemind.exception.HiveSynchronizationException;
-import io.hivemind.exception.NotSupportedException;
 import io.hivemind.synchronizer.HiveSynchronizer;
+import io.hivemind.synchronizer.configuration.SynchronizerConfiguration;
+import io.hivemind.synchronizer.constant.ConsistencyModel;
+import io.hivemind.synchronizer.exception.HiveSynchronizationException;
+import io.hivemind.synchronizer.exception.NotSupportedException;
 
 /**
  * Connects to and manages hivemind

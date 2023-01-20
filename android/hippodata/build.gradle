@@ -36,7 +36,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation files('C://Users//Patrick//Desktop//werk_en_hobby//projects//hivemind//synchronizer//target//hivemind-synchronizer-0.1-jar-with-dependencies.jar')
+    implementation 'io.hivemind:hivemind-synchronizer-android:0.1'
+    implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.room:room-runtime:2.0.0'
     testImplementation project(path: ':hippodata')
