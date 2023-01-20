@@ -17,6 +17,7 @@ package io.hippocampus.agent.data;
 
 import io.hippocampus.agent.model.Hippo;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Utility class for sort by creation date test
@@ -30,7 +31,7 @@ public class SortByCreationDateTestUtil {
 
     public static Hippo getHippoWithCreationDate(final int daysToAdd) {
         Hippo hippo = new Hippo();
-        hippo.setCreationDate(LocalDateTime.now().plusDays(daysToAdd));
+        hippo.setCreationDate(LocalDateTime.now().plusDays(daysToAdd).with(LocalTime.MIDNIGHT));
 
         return hippo;
     }
