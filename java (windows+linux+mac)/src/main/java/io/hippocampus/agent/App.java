@@ -55,8 +55,7 @@ public class App extends Application {
         hippoAppState = HippoAppState.getInstance();
 
         try {
-            SynchronizerConfiguration config = new SynchronizerConfiguration("http://192.168.178.108:8000", ConsistencyModel.EVENTUAL_CONSISTENCY);
-            config.setPeriodBetweenRequests(10);
+            SynchronizerConfiguration config = new SynchronizerConfiguration("http://localhost:8000", ConsistencyModel.EVENTUAL_CONSISTENCY);
             synchronizer = new HiveSynchronizer(
                     new HippoResourceProvider(hippoService), config);
         } catch (NotSupportedException ex) {
