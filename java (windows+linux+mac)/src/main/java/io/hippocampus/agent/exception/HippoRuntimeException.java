@@ -1,0 +1,29 @@
+/**
+ * Copyright (c) p-it
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.hippocampus.agent.exception;
+
+/**
+ * Custom exception for when things go wrong while doing things at run time that
+ * officially always should work. (not an exception related to e.g. IO)
+ *
+ * @author Patrick-4488
+ */
+public class HippoRuntimeException extends HippoException {
+
+    public HippoRuntimeException(final HippoCeption exception) {
+        super(exception);
+    }
+}
