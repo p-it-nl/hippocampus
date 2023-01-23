@@ -13,29 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.hippocampus.hippodata.converter;
-
-import androidx.room.TypeConverter;
-
-import java.util.Date;
+package io.hippocampus.agent.util;
 
 /**
- * Converts dates from and to what SQLite can understand
+ * Configuration for logger
  *
+ * @see java.lang.System.Logger
  * @author Patrick-4488
  */
-public class DateConverter {
+public class LogConfig {
 
-    private DateConverter() {
+    private LogConfig() {
+    }
+    
+    /**
+     * Configures the logger without additional property files or dependencies
+     */
+    public static void configure() {
+        System.setProperty(
+                "java.util.logging.SimpleFormatter.format",
+                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s %5$s%6$s%n");
     }
 
-    @TypeConverter
-    public static Date toDate(final Long value) {
-        return value == null ? null : new Date(value);
-    }
-
-    @TypeConverter
-    public static Long toLong(final Date value) {
-        return value == null ? null : value.getTime();
-    }
 }

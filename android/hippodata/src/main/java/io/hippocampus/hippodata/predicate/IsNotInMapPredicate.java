@@ -56,6 +56,6 @@ public class IsNotInMapPredicate implements Predicate<Hippo> {
      */
     @Override
     public boolean test(final Hippo hippo) {
-        return !map.containsKey(hippo.getIdAsLong());
+        return !map.containsKey(hippo.getId());
     }
 }

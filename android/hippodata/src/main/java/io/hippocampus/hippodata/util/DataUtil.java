@@ -24,6 +24,9 @@ public class DataUtil {
 
     private static final String wildcard = "%";
 
+    private DataUtil() {
+    }
+
     /**
      * Generate like query for needle
      *

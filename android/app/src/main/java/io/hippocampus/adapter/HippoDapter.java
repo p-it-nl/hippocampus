@@ -77,7 +77,7 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
 
         prepareListItem(hippo, listItem);
         setText(hippo, listItem);
-        setTags(hippo.getTags(), listItem, parent);
+        setTags(hippo.getTagsAsParts(), listItem, parent);
 
         return listItem;
     }
@@ -100,7 +100,7 @@ public class HippoDapter extends ArrayAdapter<Hippo> {
 
     private void setText(final Hippo hippo, final View listItem) {
         TextView hippoText = listItem.findViewById(R.id.list_item_text);
-        hippoText.setText(hippo.hippo);
+        hippoText.setText(hippo.getHippoText());
     }
 
     private void toggleExpand(final View hippoListItemExpand) {

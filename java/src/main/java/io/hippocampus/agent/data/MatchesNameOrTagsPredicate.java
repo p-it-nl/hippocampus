@@ -1,23 +1,22 @@
 /**
  * Copyright (c) p-it
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.hippocampus.hippodata.predicate;
+package io.hippocampus.agent.data;
 
+import io.hippocampus.agent.model.Hippo;
 import java.util.function.Predicate;
-
-import io.hippocampus.hippodata.entity.Hippo;
 
 /**
  * Predicate for finding hippos matching input on tags and names<br>
@@ -59,12 +58,6 @@ public class MatchesNameOrTagsPredicate implements Predicate<Hippo> {
         for (String needle : needles) {
             if (canMatch(needle, hippo)) {
                 match = matchesHippo(needle, hippo) || matchesAnyTag(needle, hippo);
-            } else {
-                continue;
-            }
-
-            if (!match) {
-                break;
             }
         }
 
@@ -72,8 +65,8 @@ public class MatchesNameOrTagsPredicate implements Predicate<Hippo> {
     }
 
     private boolean matchesHippo(final String needle, final Hippo hippo) {
-        if (hippo.getHippoText() != null) {
-            String haystack = hippo.getHippoText().toLowerCase().trim();
+        if (hippo.getHippo() != null) {
+            String haystack = hippo.getHippo().toLowerCase().trim();
             return haystack.contains(needle);
         } else {
             return false;
@@ -82,7 +75,7 @@ public class MatchesNameOrTagsPredicate implements Predicate<Hippo> {
 
     private boolean matchesAnyTag(final String needle, final Hippo hippo) {
         if (hippo.getTags() != null) {
-            return hippo.getTagsAsParts()
+            return hippo.getTags()
                     .stream()
                     .anyMatch(t -> t.toLowerCase().trim().contains(needle));
         } else {
@@ -91,6 +84,6 @@ public class MatchesNameOrTagsPredicate implements Predicate<Hippo> {
     }
 
     private boolean canMatch(final String needle, final Hippo hippo) {
-        return needle != null && !needle.isEmpty() && hippo != null && (hippo.getHippoText() != null || hippo.getTags() != null);
+        return needle != null && !needle.isEmpty() && hippo != null && (hippo.getHippo() != null || hippo.getTags() != null);
     }
 }

@@ -76,7 +76,7 @@ public class Hivemind {
     public void start() {
         if (synchronizer == null) {
             try {
-                SynchronizerConfiguration config = new SynchronizerConfiguration("https://p-it.nl/hivemind", ConsistencyModel.EVENTUAL_CONSISTENCY);
+                SynchronizerConfiguration config = new SynchronizerConfiguration("http://localhost/hivemind", ConsistencyModel.EVENTUAL_CONSISTENCY);
                 config.setPeriodBetweenRequests(10);
                 synchronizer = new HiveSynchronizer(
                         new HippoResourceProvider(this), config);

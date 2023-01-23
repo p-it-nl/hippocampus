@@ -13,29 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.hippocampus.hippodata.converter;
-
-import androidx.room.TypeConverter;
-
-import java.util.Date;
+package io.hippocampus.agent.data;
 
 /**
- * Converts dates from and to what SQLite can understand
+ * The supported search criteria
+ *
+ * FUTURE_WORK: Add and implement more
  *
  * @author Patrick-4488
  */
-public class DateConverter {
+public enum Criteria {
 
-    private DateConverter() {
-    }
+    ALL
 
-    @TypeConverter
-    public static Date toDate(final Long value) {
-        return value == null ? null : new Date(value);
-    }
-
-    @TypeConverter
-    public static Long toLong(final Date value) {
-        return value == null ? null : value.getTime();
-    }
 }

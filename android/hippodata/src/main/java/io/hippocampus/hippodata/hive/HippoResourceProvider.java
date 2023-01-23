@@ -50,9 +50,9 @@ public class HippoResourceProvider implements ResourceProvider {
 
     @Override
     public List<HiveResource> provideAllResources() {
-        List<Hippo> hippos = hippoService.getHippos(null);
+        // FUTURE_WORK: implement other contet type support, serializable wont work
 
-        return List.copyOf(hippos);
+        return null;
     }
 
     @Override
@@ -64,7 +64,9 @@ public class HippoResourceProvider implements ResourceProvider {
         List<Hippo> requestedHippos = new ArrayList<>();
         hippoService.getHippos(predicate);
 
-        return List.copyOf(requestedHippos);
+        // FUTURE_WORK: implement other contet type support, serializable wont work
+
+        return null;
     }
 
     @Override

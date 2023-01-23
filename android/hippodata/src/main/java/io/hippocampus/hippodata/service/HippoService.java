@@ -71,9 +71,10 @@ public class HippoService {
      * @param hippo the hippo to update
      */
     public void saveHippo(final Hippo hippo) {
-        if (hippo != null && hippo.hippo != null && !hippo.hippo.isEmpty()) {
-            Hippo existing = hippoDao.getById(hippo.id);
-            boolean isNewer = (existing == null || (hippo.getVersionAsLong() > existing.getVersionAsLong()));
+        String hippoText = hippo.getHippoText();
+        if (hippo != null && hippoText != null && !hippoText.isEmpty()) {
+            Hippo existing = hippoDao.getById(hippo.getId());
+            boolean isNewer = (existing == null || (hippo.getVersion() > existing.getVersion()));
             if (existing == null || isNewer) {
                 determineTheVersion(hippo);
                 determineTheCreationDate(hippo);
@@ -131,17 +132,17 @@ public class HippoService {
     }
 
     private void determineTheCreationDate(final Hippo hippo) {
-        Date date = hippo.creationDate;
+        Date date = hippo.getCreationDate();
         if (date == null) {
-            hippo.creationDate = new Date();
+            hippo.setCreationDate(new Date());
         } else {
             // Its alright, let it keep its date
         }
     }
 
     private void determineTheVersion(final Hippo hippo) {
-        if (hippo.getVersion() == null || hippo.getVersionAsLong() == 0) {
-            hippo.version = 1L;
+        if (hippo.getVersion() == 0) {
+            hippo.setVersion(1L);
         } else {
             // Its alright, let it keep its version
         }

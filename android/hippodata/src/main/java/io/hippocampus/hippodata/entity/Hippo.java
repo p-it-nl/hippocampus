@@ -19,6 +19,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -33,22 +34,22 @@ import io.hivemind.synchronizer.HiveResource;
  * @see HiveResource
  */
 @Entity
-public class Hippo extends HiveResource {
+public class Hippo {
 
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    private long id;
 
     @ColumnInfo(name = "version")
-    public long version;
+    private long version;
 
     @ColumnInfo(name = "hippo")
-    public String hippo;
+    private String hippoText;
 
     @ColumnInfo(name = "tags")
-    public String tags;
+    private String tags;
 
     @ColumnInfo(name = "creation_date")
-    public Date creationDate;
+    private Date creationDate;
 
     private static final String SPLIT = " ";
 
@@ -56,32 +57,78 @@ public class Hippo extends HiveResource {
     }
 
     public Hippo(final String hippoText, final String hippoTags) {
-        this.hippo = hippoText;
+        this.hippoText = hippoText;
         this.tags = hippoTags;
     }
 
-    @Override
-    public Object getId() {
-        return id;
-    }
-
-    @Override
-    public Object getVersion() {
-        return version;
-    }
-
     /**
-     * @return the id as long
+     * @return the id
      */
-    public long getIdAsLong() {
+    public long getId() {
         return id;
     }
 
     /**
-     * @return the version as long
+     * @param id  the id
      */
-    public long getVersionAsLong() {
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the version
+     */
+    public long getVersion() {
         return version;
+    }
+
+    /**
+     * @param version the version
+     */
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    /**
+     * @return the hippo
+     */
+    public String getHippoText() {
+        return hippoText;
+    }
+
+    /**
+     * @param hippoText the hippo to set
+     */
+    public void setHippoText(final String hippoText) {
+        this.hippoText = hippoText;
+    }
+
+    /**
+     * @return the tags as string
+     */
+    public String getTags() {
+        return tags;
+    }
+
+    /**
+     * @param tags the tags to set
+     */
+    public void setTags(final String tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * @return the creation date
+     */
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    /**
+     * @param creationDate the date to set
+     */
+    public void setCreationDate(final Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     /**
@@ -94,7 +141,7 @@ public class Hippo extends HiveResource {
     /**
      * @return tags separated
      */
-    public List<String> getTags() {
+    public List<String> getTagsAsParts() {
         if (tags != null) {
             return Arrays.asList(tags.split(SPLIT));
         } else {
@@ -106,8 +153,8 @@ public class Hippo extends HiveResource {
     public String toString() {
         return "id: " + id + "\n"
                 + "version: " + version + "\n"
-                + "hippo: " + hippo + "\n"
-                + "tags: " + (tags != null ? tags.toString() : "") + "\n"
+                + "hippoText: " + hippoText + "\n"
+                + "tags: " + (tags != null ? tags : "") + "\n"
                 + "creationDate: "
                 + (creationDate != null ? creationDate.toString() : "");
     }

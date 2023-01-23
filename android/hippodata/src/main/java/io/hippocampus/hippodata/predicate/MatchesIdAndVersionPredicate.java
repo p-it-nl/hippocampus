@@ -55,10 +55,10 @@ public class MatchesIdAndVersionPredicate implements Predicate<Hippo> {
      */
     @Override
     public boolean test(final Hippo hippo) {
-        long id = hippo.getIdAsLong();
+        long id = hippo.getId();
         if (map.containsKey(id)) {
             Long version = map.get(id);
-            return version == null || (version == hippo.getVersionAsLong());
+            return version == null || (version == hippo.getVersion());
         } else {
             return false;
         }

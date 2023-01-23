@@ -10,28 +10,22 @@ pipeline {
                 git url: 'git@{url}:hippocampus-agent.git'
             }
 		}
-		
-		stage('Update permissions') {
-		    steps {
-		        sh 'cd android && gradle clean'
-		    }   
-		}
         
-		stage('Test hippocampus - Android') {
+		stage('Test hippocampus - Java') {
             steps {
-                sh 'cd android && gradle test --info'
+                sh 'cd java && gradle test --info'
             }
         }
         
-		stage('Build hippocampus - Android') {
+		stage('Build hippocampus - Java') {
             steps {
-                sh 'cd android && gradle build --info'
+                sh 'cd java && gradle build --info'
             }
         }
 		
 		stage('Run sonar-scanner') {
 		    steps {
-		        sh 'sonar-scanner -Dsonar.login={token} -Dsonar.projectBaseDir=android'
+		        sh 'sonar-scanner -Dsonar.login={token} -Dsonar.projectBaseDir=java'
 		    }
 		}
 
