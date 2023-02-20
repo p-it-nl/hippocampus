@@ -74,7 +74,7 @@ public class SimpleHippoReaderTest {
     @Test
     public void readWithIncorrectLineHavingNoId() {
         HippoCeption expected = HippoCeption.NOT_A_HIPPOS_FILE;
-        String line = SimpleHippoReaderTestUtil.HIPPO_STRING_INVALID_WITH_SEPARATOR;
+        String line = SimpleHippoReaderTestUtil.HIPPO_STRING_INVALID_WITHOUT_ID;
 
         HippoException exception = assertThrows(HippoFileReadException.class,
                 () -> SimpleHippoReader.read(line));

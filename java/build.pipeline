@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Clone hippocampus') {
             steps {
-                git url: 'git@{url}:hippocampus-agent.git'
+                git url: 'git@{url}:hippocampus.git'
             }
 		}
         

@@ -23,7 +23,6 @@ import io.hippocampus.agent.service.HippoFileHelper;
 import io.hippocampus.agent.util.ApplicationData;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.Logger.Level.ERROR;

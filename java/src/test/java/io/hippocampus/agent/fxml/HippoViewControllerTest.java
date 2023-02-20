@@ -72,7 +72,7 @@ public class HippoViewControllerTest {
     @Test
     public void setEditHippoWithEmptyHippo() {
         HippoViewController classUnderTest = new HippoViewController();
-        Hippo hippo = null;
+        Hippo hippo = new Hippo();
 
         assertDoesNotThrow(() -> classUnderTest.setEditHippo(hippo));
     }

@@ -21,14 +21,12 @@ import io.hippocampus.agent.exception.HippoDataException;
 import io.hippocampus.agent.util.ApplicationData;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import static java.lang.System.Logger.Level.ERROR;
 import static java.lang.System.Logger.Level.INFO;
-import java.nio.file.Files;
 
 /**
  * Helper for all to do with hippo related files
