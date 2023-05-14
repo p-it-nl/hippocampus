@@ -52,7 +52,7 @@ public enum HippoCeption {
             + " file chooser (attempted when opening or saving a backup file"),
     FAILURE_TO_SAVE_BACKUP("An exception occurred when attempting to save the"
             + " backup file. Try agian."),
-    NO_NEW_HIPPOS("It was not possible to detect any Hippos in the selected file"),
+    NO_NEW_HIPPOS("It was not possible to detect any (new) Hippos in the selected file"),
     NOT_A_HIPPOS_FILE("The selected file is either not a Hippocampus backup file"
             + " or it has been corrupted. Either way, it was not possible to "
             + "read the file"),
